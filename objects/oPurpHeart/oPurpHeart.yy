@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"oGhost",
+  "%Name":"oPurpHeart",
   "eventList":[],
   "managed":true,
-  "name":"oGhost",
+  "name":"oPurpHeart",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
@@ -28,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sGhost",
-    "path":"sprites/sGhost/sGhost.yy",
+    "name":"sPurpHeart",
+    "path":"sprites/sPurpHeart/sPurpHeart.yy",
   },
   "spriteMaskId":null,
   "visible":true,

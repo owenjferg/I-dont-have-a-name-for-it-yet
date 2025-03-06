@@ -8,8 +8,19 @@ jumps = 0; // Current jumps
 base_jumpsmax = 1; // Default jumps (without double jump)
 jumpsmax = base_jumpsmax; // Current max jumps
 has_doublejump_item = false; // Tracks if the player has the double jump item
+global.can_swim = false; // Tracks if player can swim or not
+global.playerhp = 5
+global.hp_max = global.playerhp
+// alarm to trigger every second
+alarm[0] = room_speed;
 
+// Initialize the fade-in effect for the text
+global.game_paused = false;  // Game is not paused at the start
+global.death_started = false;
+global.death_alpha = 0;  // Start the text invisible
+global.death_time = room_speed * 2;  // Fade duration (in steps, e.g., 2 seconds)
 
+sprite_index = sMain;
 
 StateFree = function() {
     var key_right = keyboard_check(ord("D"));
