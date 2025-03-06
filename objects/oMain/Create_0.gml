@@ -91,8 +91,8 @@ state = StateFree; // Initial state
 
 StateClimbing = function() {
     var key_climb = keyboard_check(vk_shift);
-    var key_up = keyboard_check(ord("S")); // S moves up
-    var key_down = keyboard_check(ord("W")); // W moves down
+    var key_up = keyboard_check(ord("W")); // W moves up
+    var key_down = keyboard_check(ord("S")); // S moves down
     var key_jump = keyboard_check_pressed(vk_space);
 
     // Check if we should release from wall (manual release or jump)
@@ -115,8 +115,8 @@ StateClimbing = function() {
         return;
     }
 
-    // Vertical movement (swapped W and S)
-    vsp = (key_down - key_up) * climb_speed; // Now S moves up, W moves down
+    // Vertical movement 
+    vsp = (key_down - key_up) * climb_speed; 
 
     // Vertical collision
     if (place_meeting(x, y+vsp, oWall)) {
