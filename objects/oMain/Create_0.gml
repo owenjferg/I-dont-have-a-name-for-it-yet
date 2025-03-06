@@ -1,22 +1,14 @@
-//Initialise Variables
-grav = 0.2; //gravity
-// Horizontal and Vertical Speed
-hsp = 0; //set to 0 as it is the current speed 
-vsp = 0; 
+// Initialise Variables
+grav = 0.2; // Gravity
+hsp = 0; // Horizontal speed
+vsp = 0; // Vertical speed
+jumpspeed = 7; // Jump strength
+movespeed = 4; // Movement speed
+jumps = 0; // Current jumps
+base_jumpsmax = 1; // Default jumps (without double jump)
+jumpsmax = base_jumpsmax; // Current max jumps
+has_doublejump_item = false; // Tracks if the player has the double jump item
 
-jumpspeed = 7; 
-
-movespeed = 4; 
-
-jumps = 0;
-
-jumpsmax = 1;
-
-has_doublejump_item = false;
-
-climb_cooldown = 0; // Cooldown timer after climbing ends
-
-slide_speed = 2; // Speed at which the player slides down the wall
 
 
 StateFree = function() {
@@ -31,7 +23,8 @@ StateFree = function() {
 
     // If player is on the ground, reset jumps and climb stamina
     if (place_meeting(x, y+1, oWall)) {
-        jumps = jumpsmax; // Reset jumps to jumpsmax (1 or 2)
+        jumpsmax = base_jumpsmax; // Reset jumpsmax to base value (1 or 2)
+        jumps = jumpsmax; // Fully refill jumps
         climb_stamina = climb_stamina_max; // Reset stamina when grounded
     }
 
@@ -44,11 +37,12 @@ StateFree = function() {
     // Grant double jump
     if (place_meeting(x+1, y+1, oAppleguy)) {
         has_doublejump_item = true;
+        base_jumpsmax = 2; // Update base_jumpsmax to 2
         instance_destroy(oAppleguy);
-        jumpsmax = 2; // Set jumpsmax to 2 if the player picks up the double jump item
+        jumps = base_jumpsmax; // Fully refill jumps when collecting the item
     }
 
-    // Wall grab check (only if climb cooldown is 0)
+    // Wall grab check
     if (climb_cooldown <= 0 && keyboard_check(vk_shift) && !place_meeting(x, y+1, oWall)) {
         var left_wall = place_meeting(x-1, y, oWall);
         var right_wall = place_meeting(x+1, y, oWall);
@@ -57,7 +51,8 @@ StateFree = function() {
             climb_dir = left_wall ? -1 : 1;
             state = StateClimbing;
             climbing = true;
-            jumps = 1; // Reset jumps to 1 when grabbing a wall
+            jumps = 1; // Reset jumps to 1
+            jumpsmax = 1; // Force max jumps to 1 while on the wall
             vsp = 0; // Cancel vertical momentum
         }
     }
@@ -81,16 +76,18 @@ StateFree = function() {
     y += vsp;
 }
 
-state = StateFree;
-
 // Climbing variables
-climb_speed = 3;
-climb_jump_force = 5;
-climbing = false;
+climb_speed = 3; // Speed of climbing
+climb_jump_force = 5; // Horizontal force when wall jumping
+climbing = false; // Tracks if the player is climbing
 climb_dir = 0; // -1 for left wall, 1 for right wall
-climb_stamina_max = 90;
-climb_stamina = climb_stamina_max;
-can_grab = true; // cooldown to prevent immediate regrab
+climb_stamina_max = 90; // Max stamina for climbing
+climb_stamina = climb_stamina_max; // Current stamina
+can_grab = true; // Cooldown to prevent immediate regrab
+climb_cooldown = 0; // Cooldown timer after climbing ends
+slide_speed = 2; // Speed at which the player slides down the wall
+
+state = StateFree; // Initial state
 
 StateClimbing = function() {
     var key_climb = keyboard_check(vk_shift);
@@ -106,7 +103,7 @@ StateClimbing = function() {
         if (key_jump) {
             hsp = -climb_dir * climb_jump_force;
             vsp = -jumpspeed;
-            jumps = 1; // Reset jumps to 1 after wall jump
+            jumps = 0; // After wall jump, set jumps to 0
         }
         return;
     }
@@ -166,12 +163,12 @@ StateSliding = function() {
         return;
     }
 
-    // Allow the player to jump off the wall while sliding
+    // Allow the player to jump off the wall while sliding (FIXED)
     if (key_jump) {
         hsp = -climb_dir * climb_jump_force;
         vsp = -jumpspeed;
         state = StateFree;
-        jumps = jumpsmax;
+        jumps = 0; // Force jumps to 0 after sliding jump
         climb_cooldown = 15; // Set cooldown timer
         return;
     }
@@ -202,8 +199,3 @@ StateSliding = function() {
     }
     y += vsp;
 }
-	
-	
-	
-	
-	
