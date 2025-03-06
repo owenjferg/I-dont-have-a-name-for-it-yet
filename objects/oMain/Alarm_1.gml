@@ -1,0 +1,2 @@
+/// @ invincibility frames
+invincible = false

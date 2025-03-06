@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"SwimmingPlayer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SwimmingPlayer",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -7,6 +7,5 @@ Interact = function() {
         text_box_active = true;
         text_box_timer = text_box_duration;
         global.can_swim = true;
-       
     }
 }

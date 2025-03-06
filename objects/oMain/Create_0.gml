@@ -12,13 +12,17 @@ global.can_swim = false; // Tracks if player can swim or not
 global.playerhp = 5
 global.hp_max = global.playerhp
 // alarm to trigger every second
-alarm[0] = room_speed;
+alarm[0] = game_get_speed(gamespeed_fps);
 
 // Initialize the fade-in effect for the text
-global.game_paused = false;  // Game is not paused at the start
-global.death_started = false;
-global.death_alpha = 0;  // Start the text invisible
-global.death_time = room_speed * 2;  // Fade duration (in steps, e.g., 2 seconds)
+death_started = false;
+death_time = game_get_speed(gamespeed_fps) * 2;  // Fade duration (in steps, e.g., 2 seconds)
+
+
+invincible = false;
+fish_player = false;
+in_water = false;
+
 
 sprite_index = sMain;
 
@@ -99,6 +103,7 @@ climb_cooldown = 0; // Cooldown timer after climbing ends
 slide_speed = 2; // Speed at which the player slides down the wall
 
 state = StateFree; // Initial state
+
 
 StateClimbing = function() {
     var key_climb = keyboard_check(vk_shift);
@@ -210,3 +215,6 @@ StateSliding = function() {
     }
     y += vsp;
 }
+
+
+	
