@@ -1,8 +1,15 @@
-if invincible == true {
+if (player.draw_player) {
+	draw_self();
+}
+	
+	if knockback.invincible == true {
 	sprite_index = sMain_Drowning;
-}
-else if fish_player == true {
+	}
+	else if water.fish_player == true {
 	sprite_index = sMain_Swimming;
-}
-else
-sprite_index = sMain
+	}
+	else if attack.playerattacking == true{
+		sprite_index = sMain_Slash;
+	}
+	else
+	sprite_index = sMain

@@ -1,14 +1,16 @@
 function DeathofPlayer() {
-    // Stop drawing the player's sprite by not calling draw_self() when dead
-    sprite_index = -1;
+    // Stop drawing the player's sprite
+    player.draw_player = false;
 
-    if (!death_started) {
-        death_started = true;
-        death_alpha = 0;
-        death_time = game_get_speed(gamespeed_fps) * 2;
+    // Initialize death sequence if not already started
+    if (!death.started) {
+        death.started = true;
+        death.alpha = 0;
+        death.time = game_get_speed(gamespeed_fps) * 2; // Fade duration (2 seconds)
     }
 
-    if (death_alpha < 1) {
-        death_alpha += 1 / death_time;
+    // Gradually increase the fade effect
+    if (death.alpha < 1) {
+        death.alpha += 1 / death.time;
     }
 }

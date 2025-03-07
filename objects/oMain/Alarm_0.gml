@@ -1,5 +1,5 @@
 /// @ Swimming Frames
-fish_player = false;
+water.fish_player = false;
 
 
 

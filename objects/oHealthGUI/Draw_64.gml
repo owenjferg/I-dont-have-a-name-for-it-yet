@@ -2,8 +2,8 @@
 
 
 
-var _oMainHealth = global.playerhp;
-var _oMainHealthmax = global.hp_max;
+var _oMainHealth = oMain.player.hp;
+var _oMainHealthmax = oMain.player.hp_max;
 var _oMainHealthFrac = frac(_oMainHealth);
 _oMainHealth -= _oMainHealthFrac;
 

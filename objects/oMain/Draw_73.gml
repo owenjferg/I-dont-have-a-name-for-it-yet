@@ -1,4 +1,5 @@
-if (global.playerhp == 0) {
+// oMain - Draw Event (Draw_73.gml)
+if (player.hp <= 0) {
     DeathofPlayer(); // Update fade logic
 
     // Save current draw settings
@@ -9,7 +10,7 @@ if (global.playerhp == 0) {
     // Configure settings for "You Died" text
     draw_set_font(font_death);
     draw_set_color(c_red);
-    draw_set_alpha(death_alpha);
+    draw_set_alpha(death.alpha);
 
     // Calculate centered position
     var text_width = string_width("You Died");
@@ -25,16 +26,18 @@ if (global.playerhp == 0) {
     draw_set_alpha(prev_alpha);
 
     // Restart on space press
-    if (keyboard_check_pressed(vk_space)) {
-        global.playerhp = 5;
-        room_goto(Room1);
-        oMain.x = 100;
-        oMain.y = 100;
-        // Reset death variables
-        death_started = false;
-        death_alpha = 0;
+   // oMain - Draw Event (Draw_73.gml)
+	if (keyboard_check_pressed(vk_space)) {
+	    player.hp = player.hp_max; // Reset health
+	    room_goto(Room1); // Restart the room (replace Room1 with your starting room)
+	    oMain.x = start_x; // Reset player position
+	    oMain.y = start_y; // Reset player position
+	    // Reset death variables
+	    death.started = false;
+	    death.alpha = 0;
+	}
     }
-} else {
+else {
     // Draw player normally when alive
     draw_self();
 }

@@ -1,2 +1,2 @@
 /// @ invincibility frames
-invincible = false
+knockback.invincible = false

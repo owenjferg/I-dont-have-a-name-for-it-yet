@@ -1,12 +1,12 @@
-if (!in_water)
+if (!water.in_water)
 {
-	in_water = true;
+	water.in_water = true;
 }
 
 
-if (invincible == false)
+if (knockback.invincible == false)
 {
-	if (!global.can_swim) 
+	if (!water.can_swim) 
 	{
 		DrowningPlayer(0.5, game_get_speed(gamespeed_fps));
 	}
