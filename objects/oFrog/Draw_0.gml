@@ -1,13 +1,11 @@
-// Reset the font and color to default (or whatever you want)
-
-
-draw_self();  // Draw the frog sprite
+// Draw the frog sprite
+draw_self();
 
 // Check if the frog is interacting with the player
 if (place_meeting(x, y, oMain)) {
     draw_set_font(font_normal);  // Set the frog's font to the normal font
-	draw_set_color(c_white);  // Set the text color to white (or any other color you prefer)
-	draw_text(x, y - 20, "Press Enter to interact"); // Show interaction prompt
+    draw_set_color(c_white);  // Set the text color to white
+    draw_text(x, y - 20, "Press Enter to interact"); // Show interaction prompt
 }
 
 // If the text box is active, display it
@@ -15,7 +13,7 @@ if (text_box_active) {
     // Draw the text box background
     draw_set_color(c_black);
     
-    // Set the text box dimensions (you can adjust these values as needed)
+    // Set the text box dimensions
     var box_width = 300;   // Width of the text box
     var box_height = 100;  // Height of the text box
     
@@ -28,7 +26,7 @@ if (text_box_active) {
     // Draw the rectangle for the text box
     draw_rectangle(box_x, box_y, box_x + box_width, box_y + box_height, false);
     
-    // Set the text color to white (or any other color you prefer)
+    // Set the text color to white
     draw_set_color(c_white);
     
     // Set the font to the normal font
@@ -44,6 +42,6 @@ if (text_box_active) {
     // Countdown for the text box to disappear
     text_box_timer--;
     if (text_box_timer <= 0) {
-		text_box_active = false; // Hide the text box after the timer runs out
+        text_box_active = false; // Hide the text box after the timer runs out
     }
 }

@@ -62,7 +62,7 @@ var key_interact = keyboard_check_pressed(vk_enter);
 if (key_interact) {
     var frog = instance_place(x, y, oFrog);
     if (frog != noone) {
-        frog.Interact();
+        frog.Interact(); // Call the Interact method
         water.can_swim = true;  // Assuming frog interaction grants swim ability
     }
 }
