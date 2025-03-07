@@ -1,9 +1,8 @@
 function SlidingPlayer() {
-    var key_climb = keyboard_check(vk_shift);
-    var key_jump = keyboard_check_pressed(vk_space);
 
-    // If the player releases the climb key, exit sliding state
-    if (!key_climb) {
+
+    // If the player releases the climb A ADADWASDASADADADDDDDDDDDDD, exit sliding state
+    if (!climb.key_climb) {
         player.state = PLAYERSTATE.Free;
         return;
     }
@@ -12,14 +11,16 @@ function SlidingPlayer() {
     movement.vsp = climb.slide_speed;
 
     // Check if player has touched the ground
-    if (place_meeting(x, y + 1, oWall)) {
-        player.state = PLAYERSTATE.Free;
-        climb.stamina = climb.stamina_max; // Reset stamina when grounded
-        return;
+	var _grounded = place_meeting(x, y + 1, oWall);
+	if (_grounded) {
+    // Snap the player to the ground to avoid floating
+    while (!place_meeting(x, y + 1, oWall)) {
+        y += 1;
     }
+}
 
     // Allow the player to jump off the wall while sliding
-    if (key_jump) {
+    if (jump.key_jump) {
         movement.hsp = -climb.dir * climb.jump_force;
         movement.vsp = -movement.jumpspeed;
         player.state = PLAYERSTATE.Free;
@@ -29,7 +30,7 @@ function SlidingPlayer() {
     }
 
     // Allow the player to re-grab the wall if they press the climb key and have cooldown
-    if (key_climb && climb.cooldown <= 0 && climb.stamina > 0) {
+    if (climb.key_climb && climb.cooldown <= 0 && climb.stamina > 0) {
         player.state = PLAYERSTATE.Climbing;
         climb.climbing = true;
         return;

@@ -1,17 +1,14 @@
 function ClimbingPlayer() {
-    var key_climb = keyboard_check(vk_shift);
-    var key_up = keyboard_check(ord("W")); // W moves up
-    var key_down = keyboard_check(ord("S")); // S moves down
-    var key_jump = keyboard_check_pressed(vk_space);
+
 
     // Check if we should release from wall (manual release or jump)
-    if (!key_climb || key_jump) {
+    if (!climb.key_climb || jump.key_jump) {
         player.state = PLAYERSTATE.Free;
         climb.climbing = false;
         climb.cooldown = 15; // Set cooldown timer
         climb.stamina = max(climb.stamina, 0); // Ensure stamina doesn't go below 0
 
-        if (key_jump) {
+        if (jump.key_jump) {
             movement.hsp = -climb.dir * climb.jump_force; // Apply horizontal jump force
             movement.vsp = -movement.jumpspeed; // Apply vertical jump force
             jump.jumps = 0; // Reset jumps after wall jump
@@ -27,7 +24,7 @@ function ClimbingPlayer() {
     }
 
     // Vertical movement
-    movement.vsp = (key_down - key_up) * climb.speed;
+    movement.vsp = (input.down - input.up) * climb.speed;
 
     // Vertical collision
     if (place_meeting(x, y + movement.vsp, oWall)) {
@@ -51,5 +48,8 @@ function ClimbingPlayer() {
 
     // Update stamina
     climb.stamina--;
+	if (player.state == PLAYERSTATE.Free) {
+		climb.stamina = climb.stamina_max;
+	}
     movement.hsp = 0; // Prevent horizontal movement
 }

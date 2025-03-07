@@ -5,20 +5,20 @@ switch (player.state) {
     case PLAYERSTATE.Sliding: SlidingPlayer(); break;
     case PLAYERSTATE.Attack_Slash: SlashAttackPlayer(); break;
     case PLAYERSTATE.Attack_Combo: ComboAttackPlayer(); break;
+	case PLAYERSTATE.Swimming: SwimmingPlayer(); break;
 }
 
-// Physics and Movement
-if (!place_meeting(x, y + 1, oWall)) {
-    movement.vsp += movement.grav;  // Apply gravity
-} else {
-    movement.vsp = 0;              // Reset vertical speed when grounded
-}
+
 
 // Horizontal Movement Input
-var key_right = keyboard_check(ord("D"));
-var key_left = -keyboard_check(ord("A"));
-var move = key_left + key_right;
-movement.hsp = move * movement.movespeed;
+input.right = keyboard_check(ord("D"));
+input.left = -keyboard_check(ord("A"));
+movement.move = input.left + input.right;
+movement.hsp = movement.move * movement.movespeed;
+
+// Vertical Movement Input
+input.down = keyboard_check(ord("S"));
+input.up = keyboard_check(ord("W"));
 
 // Apply Knockback Forces
 movement.hsp += knockback.hsp_knockback;
@@ -51,8 +51,8 @@ if (place_meeting(x, y + movement.vsp, oWall)) {
 y += movement.vsp;
 
 // Jumping System
-var key_jump = keyboard_check_pressed(vk_space);
-if (key_jump && place_meeting(x, y + 1, oWall)) {
+jump.key_jump = keyboard_check_pressed(vk_space);
+if (jump.key_jump && place_meeting(x, y + 1, oWall)) {
     movement.vsp = -movement.jumpspeed;
     jump.jumps = jump.jumpsmax - 1;  // Reset jumps counter
 }
@@ -67,12 +67,17 @@ if (key_interact) {
     }
 }
 
-// Water State Management
+// Leaving water
 if (water.in_water && !place_meeting(x, y, oWater)) {
     water.in_water = false;
-    movement.grav = 0.2;
+    movement.grav = 0.4;
     movement.movespeed = movement.No_effect_movespeed;
+    movement.vsp = clamp(movement.vsp, -movement.max_vsp, movement.max_vsp); // Limit upward speed
+    player.state = PLAYERSTATE.Free; // Force exit swimming state
 }
+
+// Climbing button
+climb.key_climb = keyboard_check(vk_shift); // Use "held" instead of "pressed"
 
 // Climbing Cooldown
 if (climb.cooldown > 0) climb.cooldown--;
@@ -97,4 +102,13 @@ if (jump.has_doublejump_item == true) {
 attack.keyAttack = keyboard_check_pressed(ord("F"));
 if (attack.keyAttack && player.state == PLAYERSTATE.Free) {
     SlashAttackPlayer();
+}
+
+// Update dash key state
+water.keyDash = keyboard_check_pressed(ord("E"));
+
+
+// reset stamina when touching ground
+if (player.state == PLAYERSTATE.Free && place_meeting(x, y + 1, oWall)) {
+    climb.stamina = climb.stamina_max;
 }

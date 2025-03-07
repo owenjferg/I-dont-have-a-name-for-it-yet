@@ -5,6 +5,7 @@ enum PLAYERSTATE {
     Attack_Combo,
     Climbing,
     Sliding,
+	Swimming,
 }
 
 // Player Struct
@@ -21,18 +22,28 @@ player = {
 
 // Movement Struct
 movement = {
-    grav: 0.2, // Gravity
+    grav: 0.4, // Gravity
     hsp: 0, // Horizontal speed
     vsp: 0, // Vertical speed
-    jumpspeed: 7, // Jump strength
-    movespeed: 4, // Movement speed
-    No_effect_movespeed: 4, // Original movespeed
+    jumpspeed: 6, // Jump strength
+    movespeed: 2, // Movement speed
+    No_effect_movespeed: 2, // Original movespeed
     max_hsp: 6, // Maximum horizontal speed
     max_vsp: 10, // Maximum vertical speed
+	move: false,
+};
+
+//Input Struct
+input = {
+  right: 0,
+  left: 0,
+  up: 0,
+  down: 0
 };
 
 // Jump Struct
 jump = {
+	key_jump: false,
     jumps: 0, // Current jumps
     base_jumpsmax: 1, // Default jumps (without double jump)
     jumpsmax: 1, // Current max jumps
@@ -44,6 +55,12 @@ water = {
     can_swim: false, // Tracks if the player can swim
     in_water: false, // Tracks if the player is in water
     fish_player: false, // Tracks if the player is in fish form
+	canDash: false, // 
+	dashDistance: 96, // pixels dashed
+	dashTime: 12, // amount of frames per dash
+	dashSp: 10,
+	dashEnergy: 10,
+	keyDash: false,
 };
 
 // Death and Fade Effect Struct
@@ -64,6 +81,7 @@ knockback = {
 
 // Climbing Struct
 climb = {
+	key_climb: false,
     speed: 3, // Speed of climbing
     jump_force: 5, // Horizontal force when wall jumping
     climbing: false, // Tracks if the player is climbing

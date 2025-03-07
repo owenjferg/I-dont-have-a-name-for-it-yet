@@ -12,6 +12,6 @@ if (knockback.invincible == false)
 	}
 	else
 	{
-		SwimmingPlayer()
+		SwimmingPlayer();
 	}
 }

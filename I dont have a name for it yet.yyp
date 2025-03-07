@@ -48,6 +48,7 @@
     {"id":{"name":"AnimationEnd","path":"scripts/AnimationEnd/AnimationEnd.yy",},},
     {"id":{"name":"ClimbingPlayer","path":"scripts/ClimbingPlayer/ClimbingPlayer.yy",},},
     {"id":{"name":"ComboAttackPlayer","path":"scripts/ComboAttackPlayer/ComboAttackPlayer.yy",},},
+    {"id":{"name":"DashingPlayer","path":"scripts/DashingPlayer/DashingPlayer.yy",},},
     {"id":{"name":"DeathofPlayer","path":"scripts/DeathofPlayer/DeathofPlayer.yy",},},
     {"id":{"name":"DrowningPlayer","path":"scripts/DrowningPlayer/DrowningPlayer.yy",},},
     {"id":{"name":"EnemyHit","path":"scripts/EnemyHit/EnemyHit.yy",},},

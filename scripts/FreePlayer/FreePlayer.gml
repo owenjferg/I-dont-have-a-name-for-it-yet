@@ -1,9 +1,7 @@
 function FreePlayer() {
     // Horizontal Movement Input
-    var key_right = keyboard_check(ord("D"));
-    var key_left = -keyboard_check(ord("A"));
-    var move = key_left + key_right;
-    movement.hsp = move * movement.movespeed;
+
+    movement.hsp = movement.move * movement.movespeed;
 
     // Apply gravity if not on the ground
     if (!place_meeting(x, y + 1, oWall)) {
@@ -13,15 +11,15 @@ function FreePlayer() {
     }
 
 // Jumping (Ground)
-    var key_jump = keyboard_check_pressed(vk_space);
-    if (key_jump && place_meeting(x, y + 1, oWall)) {
+   
+    if (jump.key_jump && place_meeting(x, y + 1, oWall)) {
         movement.vsp = -movement.jumpspeed;
         jump.jumps = jump.jumpsmax - 1;
     }
 
     // Double Jump (Mid-Air) - Add check for climbing state
     if (
-        key_jump && 
+        jump.key_jump && 
         !place_meeting(x, y + 1, oWall) && 
         jump.jumps > 0 && 
         player.state != PLAYERSTATE.Climbing // Block double jump while climbing
@@ -31,7 +29,7 @@ function FreePlayer() {
     }
 
     // Wall Grab Check
-    if (climb.cooldown <= 0 && keyboard_check(vk_shift) && !place_meeting(x, y + 1, oWall)) {
+    if (climb.cooldown <= 0 && climb.key_climb && !place_meeting(x, y + 1, oWall)) {
         var left_wall = place_meeting(x - 1, y, oWall);
         var right_wall = place_meeting(x + 1, y, oWall);
 
@@ -67,4 +65,9 @@ function FreePlayer() {
     if (attack.keyAttack) {
         player.state = PLAYERSTATE.Attack_Slash;
     }
+	
+	// Ensure player can transition to swimming state
+	if (water.in_water) {
+    player.state = PLAYERSTATE.Swimming;
+}
 }
