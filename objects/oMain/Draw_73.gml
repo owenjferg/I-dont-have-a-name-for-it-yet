@@ -30,8 +30,8 @@ if (player.hp <= 0) {
 	if (keyboard_check_pressed(vk_space)) {
 	    player.hp = player.hp_max; // Reset health
 	    room_goto(Room1); // Restart the room (replace Room1 with your starting room)
-	    oMain.x = start_x; // Reset player position
-	    oMain.y = start_y; // Reset player position
+	    oMain.x = position.start_x; // Reset player position
+	    oMain.y = position.start_y; // Reset player position
 	    // Reset death variables
 	    death.started = false;
 	    death.alpha = 0;
